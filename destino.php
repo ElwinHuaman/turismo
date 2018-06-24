@@ -1,25 +1,30 @@
 <?php
 include("php/api.php");
+    $city_name = $_GET['city_name'];
+    $id = $_GET['id'];
 	// creación de la conexión a la base de datos con mysql_connect()
 	$conexion = mysqli_connect( "localhost", "root", "" ) or die ("No se ha podido conectar al servidor de Base de datos");	
 	$db = mysqli_select_db( $conexion, "turismo" ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );	
-	$consulta = "SELECT * FROM alojamientos WHERE id='1'";
+	$consulta = 'SELECT * FROM alojamientos WHERE id="'.$id.'"';
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
     $columna = mysqli_fetch_array( $resultado);
+    $country = $columna['country'];
     $country = utf8_encode($columna['country']);
-    $url = "http://papi.minube.com/cities?lang=ES";
-    $cities = API::GET($url);    
+    $url = 'http://papi.minube.com/cities?lang=ES&filter='.$city_name;
+    $cities = API::GET($url);
     $ciudades = json_decode($cities,TRUE);
-    $country_id = 0; 
+    $country_id = 0;     
+    $city_id = 0;
     for($i=1;$i<count($ciudades);$i++){
-        foreach($ciudades[$i] as $clave => $valor) {
-            if($valor == $country){
-                $country_id = $ciudades[$i]['country_id']; 
+        foreach($ciudades[$i] as $clave => $valor){
+            if($ciudades[$i]['city_name']==$city_name && $ciudades[$i]['zone_name']==$city_name){
+                $country_id = $ciudades[$i]['country_id'];
+                $city_id = $ciudades[$i]['city_id'];
             }            
         }        
     }
 
-    $url_pois = "http://papi.minube.com/pois?lang=ES&country_id=".$country_id;
+    $url_pois = "http://papi.minube.com/pois?lang=ES&city_id=".$city_id;
     $pois = API::GET($url_pois);
     $points = json_decode($pois,TRUE);
     // xecho $pois;
@@ -74,7 +79,7 @@ include("php/api.php");
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">¿Quienes somos?</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="#">Contacto</a></li>                
             </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -132,11 +137,12 @@ include("php/api.php");
         mysqli_close( $conexion );
 ?>
         </div>
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar"> 
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <img src="img/minube.png" style=" width: 30%;"> 
 <?php
-        for($i=1;$i<6;$i++){
+        for($i=1;$i<5;$i++){
             echo '<div class="sidebar-module sidebar-module-inset">';
-            echo '<h4>'.$points[$i]["name"].'About</h4>';
+            echo '<h4>'.$points[$i]["name"].'</h4>';
             echo '<img src='.$points[$i]['picture_url'].' class="img-responsive" alt="Responsive image">';
             echo '<a href="https://www.google.com/maps/?q='.$points[$i]['latitude'].','.$points[$i]['longitude'].'" target="_blank">ver en Maps.</a>';
             echo '</div>';

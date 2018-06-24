@@ -1,3 +1,6 @@
+<?php
+$city_name = $_GET['city_name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -70,7 +73,7 @@
                   // Selección del a base de datos a utilizar
                   $db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
                   // establecer y realizar consulta. guardamos en variable.
-                  $consulta = "SELECT * FROM alojamientos";
+                  $consulta = 'SELECT * FROM alojamientos WHERE city LIKE "'.$city_name.'"';
                   $resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
                   
                   // Bucle while que recorre cada registro y muestra cada campo en la tabla.
@@ -100,7 +103,7 @@
                       echo '</div><div class="col-lg-6">';
                         echo '<img src='.$columna['image'].' class="img-responsive" alt="Responsive image">';
                       echo '</div>';
-                      echo '<p><a class="btn btn-lg  btn-success" href="destino.php" role="button">Vivir Experiencia »</a></p>';
+                      echo '<p><a class="btn btn-lg  btn-success" href="destino.php?city_name='.$city_name.'&id='.$columna['id'].'" role="button">Vivir Experiencia »</a></p>';
                     echo '</div>';
                   }
                   
@@ -109,31 +112,7 @@
                 </dl>                                
             </div>
         </div>      
-      </div>            
-      <div class="row marketing">                    
-        <div class="col-lg-6">
-            <?php
-            $myfile = fopen("rs/output.txt", "r") or die("Unable to open file!");            
-            $result = fgets($myfile);
-            fclose($myfile);
-            $resultados = json_decode($result,TRUE);
-            // $temperatureMin = $json['daily']['data'][0]['temperatureMin'];
-            echo $resultados['Destination']['1'];
-            ?>
-        </div>
-
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div>
-
+      </div>                
       <footer class="footer">
         <p>© 2018 Experience, Inc.</p>
       </footer>

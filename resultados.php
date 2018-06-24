@@ -87,7 +87,7 @@ $resultados = json_decode($result,TRUE);
                             '.number_format($score_total,2).'
                           </div>
                         </div>
-                        <p><a class="btn btn-primary" href="destinos.php" role="button">Ver Experiencias »</a></p>
+                        <p><a class="btn btn-primary" href="destinos.php?city_name='.$resultados['Destination']["$i"].'" role="button">Ver Experiencias »</a></p>
                       </div>
                     </div>
                   </div>';
