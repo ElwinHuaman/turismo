@@ -5,7 +5,7 @@ include("php/api.php");
 	// creación de la conexión a la base de datos con mysql_connect()
 	$conexion = mysqli_connect( "localhost", "root", "" ) or die ("No se ha podido conectar al servidor de Base de datos");	
 	$db = mysqli_select_db( $conexion, "turismo" ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );	
-	$consulta = 'SELECT * FROM alojamientos WHERE id="'.$id.'"';
+	$consulta = 'SELECT * FROM traveldb WHERE id="'.$id.'"';
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
     $columna = mysqli_fetch_array( $resultado);
     $country = $columna['country'];
@@ -106,8 +106,9 @@ include("php/api.php");
     echo '<div class="col-sm-8 blog-main">
             <div class="blog-post">
                 <h2 class="blog-post-title">'.$columna['name'].'</h2>
-                <p class="blog-post-meta">Hosted by <a href="#">'.$columna['nameOwner'].'</a></p>
-                <p>'.$columna['description'].'</p>
+                <p class="blog-post-meta">Hosted by <a href="#">'.$columna['owner'].'</a></p>
+                <p>'.$columna['activity'].'</p>
+                <p>'.$columna['generaldescription'].'</p>
                 <ul>';
                     if($columna['fishing'] == '1') {
                         echo '<li><img src="img/fishing.ico" style="width:20px; height:20px;"> Actividades de Pesca</li>';
@@ -115,10 +116,10 @@ include("php/api.php");
                     if($columna['pets'] == '1') {
                         echo '<li><img src="img/pet.ico" style="width:20px; height:20px;"> Mascotas</li>';
                     }
-                    if($columna['cookingworkshop'] == '1') {
+                    if($columna['cookingws'] == '1') {
                         echo '<li><img src="img/cooking.ico" style="width:20px; height:20px;"> Se permite cocinar</li>';
                     }
-                    if($columna['equestrianRoute'] == '1') {
+                    if($columna['equestrianroute'] == '1') {
                         echo '<li><img src="img/equestrian.ico" style="width:20px; height:20px;"> Recorrido a caballo</li>';        
                     }                                                
                     if($columna['fishing'] == '1') {
@@ -127,12 +128,18 @@ include("php/api.php");
                     if($columna['seaactivities'] == '1') {
                         echo '<li><img src="img/seaactivities.ico" style="width:20px; height:20px;"> Actividades en el Mar</li>';
                     }
+                    if($columna['rooms'] !== '0') {
+                        echo '<li><img src="img/bed.ico" style="width:20px; height:20px;"> '.$columna['rooms'].' Camas disponibles</li>';
+                    }
                 echo '</ul>
                     <blockquote>
-                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    <p>Tradición <strong>'.$columna['heritagedescription'].'</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </blockquote>
-                    <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                    <p><strong>Que Haremos </strong>Al principio le daré algunos conocimientos básicos sobre la cámara y cuestiones técnicas.
+                    Te mostraré pequeñas calles y plazas, mientras caminamos dispararemos y te daré consejos para obtener mejores fotos..</p>
+                    <p><strong>Donde estaremos </strong>Caminaremos por el centro histórico descubriendo pequeñas calles y plazas. Caminar es la mejor manera de descubrir lugares secretos y no es muy común verlo. Tengo una selección de cuadrados con fuentes para refrescar la vista.</p>
+                    <p><strong>Ubicación </strong> '.$columna['location'].'</p>
+                    <p><a class="btn btn-lg  btn-success" href="#" role="button">Reservar »</a></p>
             </div><!-- /.blog-post -->';        
         mysqli_close( $conexion );
 ?>

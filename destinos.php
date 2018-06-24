@@ -73,7 +73,7 @@ $city_name = $_GET['city_name'];
                   // Selección del a base de datos a utilizar
                   $db = mysqli_select_db( $conexion, $basededatos ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
                   // establecer y realizar consulta. guardamos en variable.
-                  $consulta = 'SELECT * FROM alojamientos WHERE city LIKE "'.$city_name.'"';
+                  $consulta = 'SELECT * FROM traveldb WHERE province LIKE "'.$city_name.'"';
                   $resultado = mysqli_query( $conexion, $consulta ) or die ( "Algo ha ido mal en la consulta a la base de datos");
                   
                   // Bucle while que recorre cada registro y muestra cada campo en la tabla.
@@ -84,14 +84,14 @@ $city_name = $_GET['city_name'];
                         echo '<h1 class="card-title pricing-card-title">'.$columna['price'].'€<small class="text-muted">/ '.$columna['name'].'</small></h1>';
                         echo "<dt>Ciudad : </dt><dd>".$columna['city']."</dd>";
                         echo '<dt>Personas Max.: </dt><dd>'.$columna['maxPersons'].'</dd>';
-                        echo "<dt>Descripcion : </dt><dd>".$columna['description']."</dd>";
+                        echo "<dt>Descripcion : </dt><dd>".$columna['generaldescription']."</dd>";
                         if($columna['pets'] == '1') {
                           echo '<dt>Mascotas : </dt><dd><img src="img/pet.ico" class="img-responsive" style="width:20px; height:20px;"></dd>';
                         }
-                        if($columna['cookingworkshop'] == '1') {
+                        if($columna['cookingws'] == '1') {
                           echo '<dt>Se puede cocinar : </dt><dd><img src="img/cooking.ico" class="img-responsive" style="width:20px; height:20px;"></dd>';
                         }
-                        if($columna['equestrianRoute'] == '1') {
+                        if($columna['equestrianroute'] == '1') {
                           echo '<dt>Recorrido a Caballo : </dt><dd><img src="img/equestrian.ico" class="img-responsive" style="width:20px; height:20px;"></dd>';
                         }                                                
                         if($columna['fishing'] == '1') {
