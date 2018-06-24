@@ -25,7 +25,7 @@ ClimateDirectory="D:/Whewhe/Climate2018-06-01/"
 os.chdir("D:/WheWhe")
 print('Directorio de trabajo fijado: D:/WheWhe/') 
 
-apiKey="CkgTioeybJG20FU4mehY8M2znGWeEulO"
+apiKey="xxxxxxxxxxxxxxxx"
 
 
 #########################################################
